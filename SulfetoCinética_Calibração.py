@@ -10,14 +10,27 @@ csv_1 = pd.read_csv('Sulfetodados1_td.csv', sep=",")
 csv_2 = pd.read_csv('Sulfetodados2_td.csv', sep=",")
 csv_v = pd.read_csv('Sulfeto0valtd.csv', sep=",")
 
+def calculateMSE(ordem, x, y, quantidade):
+    z = np.polyfit(x, y, 1)
+    p = np.poly1d(z)
+
+    y_previsto = p(x)
+
+    print("Lista do y previsto", y_previsto)
+
+    j = [(a - b)**2 for a, b in zip(y, y_previsto)]
+    print("Diferença entre as somas: ", j)
+
+    dp = sum(j)
+    print("Soma das diferenças", dp)
+
+    MSE = dp/quantidade
+    print("MSE para ordem " + ordem + ":", MSE)
+
 #Ordem 0 
 
 x = csv_0['Tempo de Residência']
 y = csv_0['Concentração']
-
-plt.figure(figsize=(10, 10))
-plt.scatter(x, y, label='Observado', color='green')
-plt.text(0,22,"-0.4677 x + 49.66 R² = 0.9992", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
 
 z = np.polyfit(x, y, 1)
 p = np.poly1d(z)
@@ -31,20 +44,25 @@ slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x, y)
 print("Valor de R quadrado para ordem 0")
 print (r_value)
 
-#Plot gráfico
+calculateMSE('0', x, y, len(y))
+
+plt.figure(figsize=(10, 10))
+plt.scatter(x, y, label='Observado', color='green')
+plt.text(0,22,f"{p} R² = {r_value:.4f}", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
+
 plt.plot(x,p(x), color='black', linestyle='dashed', linewidth=2)
 plt.xlabel('Tempo de Residência')
 plt.ylabel('Concentração')
 plt.title('Função Ordem 0')
-plt.show()
+#plt.show()
 
-# Novos pontos a serem adicionados
+# Pontos validação
 x_v = csv_v['Tempo de Residência']
 y_v = -0.4677 * x_v + 49.66 
+y_cv = csv_v['Concentração']
 
 print(y_v)
 
-# Adiciona os novos pontos ao gráfico
 plt.plot(x_v, y_v, marker='x', linestyle='none', color='red', label='Simulado', markersize=7, mew=3)
 
 plt.title('Validação Sulfeto Ordem 0')
@@ -52,7 +70,6 @@ plt.xlabel('Tempo de Residência')
 plt.ylabel('Concentração')
 plt.legend() 
 
-# Mostra o gráfico
 plt.show()
 
 #Cálculo R quadrado
@@ -61,14 +78,12 @@ slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x_v, y_v)
 print("Valor de R quadrado para ordem 0 - valid")
 print (r_value)
 
+calculateMSE('0', x_v, y_cv, len(y_cv))
+
 #Ordem 1
 
 x = csv_1['Tempo de Residência']
 y = csv_1['ln[C]']
-
-plt.figure(figsize=(0.7, 0.5))
-plt.scatter(x, y)
-plt.text(0,3.1,"-0.01414 x + 3.944 R² = 0.9955", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
 
 z = np.polyfit(x, y, 1)
 p = np.poly1d(z)
@@ -81,6 +96,10 @@ slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x, y)
 print("Valor de R quadrado para ordem 1")
 print (r_value)
 
+plt.figure(figsize=(0.7, 0.5))
+plt.scatter(x, y)
+plt.text(0,3.1,f"{p} R² = {r_value:.4f}", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
+
 plt.plot(x,p(x),"r--")
 plt.xlabel('Tempo de Residência')
 plt.ylabel('ln [C]')
@@ -92,10 +111,6 @@ plt.show()
 x = csv_2['Tempo de Residência']
 y = csv_2['1/Ct']
 
-plt.figure(figsize=(7, 7))
-plt.scatter(x, y)
-plt.text(1,0.047,"0.000455 x + 0.0177 R² = 0.9754", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
-
 z = np.polyfit(x, y, 1)
 p = np.poly1d(z)
 
@@ -106,6 +121,10 @@ slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x, y)
 
 print("Valor de R quadrado para ordem 2")
 print (r_value)
+
+plt.figure(figsize=(7, 7))
+plt.scatter(x, y)
+plt.text(1,0.047,f"{p} R² = {r_value:.4f}", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
 
 plt.plot(x,p(x),"r--")
 plt.xlabel('Tempo de Residência')
