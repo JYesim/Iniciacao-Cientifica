@@ -8,7 +8,9 @@ import scipy.optimize
 csv_0 = pd.read_csv('Sulfetodados0_td.csv', sep=",")
 csv_1 = pd.read_csv('Sulfetodados1_td.csv', sep=",")
 csv_2 = pd.read_csv('Sulfetodados2_td.csv', sep=",")
-csv_v = pd.read_csv('Sulfeto0valtd.csv', sep=",")
+csv_v0 = pd.read_csv('Sulfeto0valtd.csv', sep=",")
+csv_v1 = pd.read_csv('Sulfeto1valtd.csv', sep=",")
+csv_v2 = pd.read_csv('Sulfeto2valtd.csv', sep=",")
 
 def calculateMSE(ordem, x, y, quantidade):
     z = np.polyfit(x, y, 1)
@@ -48,7 +50,7 @@ calculateMSE('0', x, y, len(y))
 
 plt.figure(figsize=(10, 10))
 plt.scatter(x, y, label='Observado', color='green')
-plt.text(0,22,f"{p} R² = {r_value:.4f}", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
+#plt.text(0,22,f"{p} R² = {r_value:.4f}", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
 
 plt.plot(x,p(x), color='black', linestyle='dashed', linewidth=2)
 plt.xlabel('Tempo de Residência')
@@ -57,9 +59,9 @@ plt.title('Função Ordem 0')
 #plt.show()
 
 # Pontos validação
-x_v = csv_v['Tempo de Residência']
+x_v = csv_v0['Tempo de Residência']
 y_v = -0.4677 * x_v + 49.66 
-y_cv = csv_v['Concentração']
+y_cv = csv_v0['Concentração']
 
 print(y_v)
 
@@ -96,15 +98,39 @@ slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x, y)
 print("Valor de R quadrado para ordem 1")
 print (r_value)
 
+calculateMSE('1', x, y, len(y))
+
 plt.figure(figsize=(0.7, 0.5))
 plt.scatter(x, y)
-plt.text(0,3.1,f"{p} R² = {r_value:.4f}", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
+#plt.text(0,3.1,f"{p} R² = {r_value:.4f}", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
 
 plt.plot(x,p(x),"r--")
 plt.xlabel('Tempo de Residência')
 plt.ylabel('ln [C]')
 plt.title('Função Ordem 1')
+#plt.show()
+
+x_v = csv_v1['Tempo de Residência']
+y_v = -0.01398 * x_v + 3.939 
+y_cv = csv_v1['ln[C]']
+
+print(y_v)
+
+plt.plot(x_v, y_v, marker='x', linestyle='none', color='red', label='Simulado', markersize=7, mew=3)
+
+plt.title('Validação Sulfeto Ordem 1')
+plt.xlabel('Tempo de Residência')
+plt.ylabel('ln[C]')
+plt.legend() 
+
 plt.show()
+
+slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x_v, y_v)
+
+print("Valor de R quadrado para ordem 1 - valid")
+print (r_value)
+
+calculateMSE('1', x_v, y_cv, len(y_cv))
 
 #Ordem 2 - Linear
 
@@ -122,35 +148,36 @@ slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x, y)
 print("Valor de R quadrado para ordem 2")
 print (r_value)
 
+calculateMSE('2', x, y, len(y))
+
 plt.figure(figsize=(7, 7))
 plt.scatter(x, y)
-plt.text(1,0.047,f"{p} R² = {r_value:.4f}", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
+#plt.text(0,0.34,f"{p} R² = {r_value:.4f}", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
 
 plt.plot(x,p(x),"r--")
 plt.xlabel('Tempo de Residência')
 plt.ylabel('1/Ct')
 plt.title('Função Ordem 2')
-plt.show()
-
-# Novos pontos a serem adicionados
-#x_v = csv_v['Tempo de Residência']
-#y_v = 0.000455 * x_v + 0.0177
-
-#print(y_v)
-
-# Adiciona os novos pontos ao gráfico
-#plt.plot(x_v, y_v, marker='x', linestyle='none', color='red', label='Simulado', markersize=7, mew=3)
-
-# Adiciona um título e rótulos (opcional)
-#plt.title('Validação Sulfeto Ordem 2')
-#plt.xlabel('Tempo de Residência')
-#plt.ylabel('1/Concentração')
-#plt.legend() # Mostra a legenda
-
-# Mostra o gráfico
 #plt.show()
 
-#slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x_v, y_v)
+x_v = csv_v2['Tempo de Residência']
+y_v = 0.001122 * x_v + 0.2538
+y_cv = csv_v2['1/Ct']
 
-#print(r_value)
+print(y_v)
 
+plt.plot(x_v, y_v, marker='x', linestyle='none', color='red', label='Simulado', markersize=7, mew=3)
+
+plt.title('Validação Sulfeto Ordem 2')
+plt.xlabel('Tempo de Residência')
+plt.ylabel('1/Ct')
+plt.legend() 
+
+plt.show()
+
+slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x_v, y_v)
+
+print("Valor de R quadrado para ordem 2 - valid")
+print (r_value)
+
+calculateMSE('2', x_v, y_cv, len(y_cv))

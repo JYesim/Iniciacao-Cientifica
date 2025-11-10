@@ -12,7 +12,7 @@ m = 1 * (10**-3)
 fXv = 0.25
 
 b = As * np.sqrt((K0 * fXv * diff) / 2 * m)
-df = pd.read_csv("Nitratodados0_7l.csv")
+df = pd.read_csv("Sulfetodados0_td.csv")
 
 df.columns = ['Tempo de Residência', 'Concentração']
 
@@ -36,9 +36,9 @@ y = df['Cout']
 print("\n # === Regressão/R ===  ")
 plt.figure(figsize=(7, 7))
 plt.scatter(x, y)
-plt.text(0.0,
-         0.0683,
-         "-1.121*10^-5 x + 0.069 \n R² = 0.9999",
+plt.text(0,
+         0.06899,
+         "-4.816e-08 x + 0.069 \n R² = 0.9999",
          size='medium',
          bbox={
              'facecolor': 'none',
@@ -62,7 +62,7 @@ print(r_value)
 plt.plot(x, p(x), "r--")
 plt.xlabel('Tempo de Residência')
 plt.ylabel('Concentração')
-plt.title('Função Ordem 0')
+plt.title('Função Ordem 0 com limitação pela difusão')
 plt.show()
 
 # === MSE ===
