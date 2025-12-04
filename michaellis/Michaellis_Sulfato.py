@@ -1,39 +1,39 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import scipy as scipy
 
-csv = pd.read_csv('Nitrato_Micha.csv', sep=",")
+csv = pd.read_csv('./data/Michaellis_Sulfato.csv', sep=",")
 
 x = csv['Cout']
 y = csv['Cout/(Ci-Cout)']
 
-plt.figure(figsize=(0.7, 0.5))
+plt.figure(figsize=(5, 5))
 plt.scatter(x, y)
-plt.text(2.0,0.55,"0.06093 x - 0.04994 R² = 0.9962", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
+plt.text(122,-6,"0.8307x - 119.7 R² = 0.9392", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
 
 z = np.polyfit(x, y, 1)
 p = np.poly1d(z)
 
-print("Função Michaellis Nitrato: ")
+print("Função Michaellis Sulfato: ")
 print(p)
 
 #Cálculo R quadrado
 slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x, y)
 
-print("Valor de R quadrado para Menten Nitrato")
+print("Valor de R quadrado para Menten Sulfeto")
 print (r_value)
 
 #Plot gráfico
 plt.plot(x,p(x),"r--")
 plt.xlabel('Cout')
 plt.ylabel('Cout/(Ci-Cout)')
-plt.title('Menten Nitrato')
+plt.title('Menten Sulfato')
 plt.show()
 
-km = 1/0.06093
+km = 1/0.8307
 
-ks = 0.04994*km
+ks = 119.7*km
 
 print("Km (taxa máxima de reação): ")
 print(km)

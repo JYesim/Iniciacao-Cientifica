@@ -1,8 +1,7 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
-csv = pd.read_csv('Sulfeto_Micha.csv', sep=",")
+csv = pd.read_csv('./data/Michaellis_Sulfato.csv', sep=",")
 
 x = csv['Cout']
 y = csv['Cout/(Ci-Cout)']
@@ -22,6 +21,6 @@ def calculateTudo(x, y, quantidade):
     print("Soma das diferenças", dp)
 
     MSE = dp/quantidade
-    print("MSE para Menten do Sulfeto de Hidrogênio", MSE)
+    print("MSE para Menten do Nitrato", MSE)
 
 calculateTudo(x, y, len(y))
