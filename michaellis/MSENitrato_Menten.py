@@ -1,0 +1,26 @@
+import numpy as np
+import pandas as pd
+
+csv = pd.read_csv('./data/Michaellis_Nitrato.csv', sep=",")
+
+x = csv['Cout']
+y = csv['Cout/(Ci-Cout)']
+
+def calculateTudo(x, y, quantidade):
+    z = np.polyfit(x, y, 1)
+    p = np.poly1d(z)
+
+    y_previsto = p(x)
+
+    print("Lista do y previsto", y_previsto)
+
+    j = [(a - b)**2 for a, b in zip(y, y_previsto)]
+    print("Diferença entre as somas: ", j)
+
+    dp = sum(j)
+    print("Soma das diferenças", dp)
+
+    MSE = dp/quantidade
+    print("MSE para Menten do Nitrato", MSE)
+
+calculateTudo(x, y, len(y))
