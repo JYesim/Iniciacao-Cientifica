@@ -21,8 +21,7 @@ def calculate_cout(ebrt):
     term = 1 - b * (ebrt / np.sqrt(Cin))
     return Cin * (term**2)
 
-df['Cout'] = df.apply(lambda row: calculate_cout(row['Tempo de Residência']),
-                      axis=1)
+df['Cout'] = df.apply(lambda row: calculate_cout(row['Tempo de Residência']), axis=1)
 
 print("# === Cout ===")
 print(df)
@@ -36,15 +35,7 @@ y = df['Cout']
 print("\n # === Regressão/R ===  ")
 plt.figure(figsize=(7, 7))
 plt.scatter(x, y)
-plt.text(0,
-         0.06899,
-         "-4.816e-08 x + 0.069 \n R² = 0.9999",
-         size='medium',
-         bbox={
-             'facecolor': 'none',
-             'edgecolor': 'k',
-             'boxstyle': 'round, pad=1'
-         })
+plt.text(0, 7.0, "-4.816e-08 x + 0.069 \n R² = 0.9999", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k','boxstyle': 'round, pad=1'})
 
 z = np.polyfit(x, y, 1)
 p = np.poly1d(z)
