@@ -1,18 +1,18 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
-csv_0 = pd.read_csv('Sulfatodados0.csv', sep=",")
-csv_1 = pd.read_csv('Sulfatodados1.csv', sep=",")
-csv_2 = pd.read_csv('Sulfatodados2.csv', sep=",")
+#Ordem 0
+csv_0 = pd.read_csv('./data/MSESulfeto_7l_0.csv', sep=",")
+csv_1 = pd.read_csv('./data/MSESulfeto_7l_1.csv', sep=",")
+csv_2 = pd.read_csv('./data/MSESulfeto_7l_2.csv', sep=",")
 
-x0 = csv_0['Tempo de Residência (s)']
-y0 = csv_0['Ct']
+x0 = csv_0['Tempo de Residência']
+y0 = csv_0['Concentração']
 
-x1 = csv_1['Tempo de Residência (s)']
-y1 = csv_1['ln[C]']
+x1 = csv_1['Tempo de Residência']
+y1 = csv_1['ln [C]']
 
-x2 = csv_2['Tempo de Residência (s)']
+x2 = csv_2['Tempo de Residência']
 y2 = csv_2['1/Ct']
 
 def calculateTudo(ordem, x, y, quantidade):

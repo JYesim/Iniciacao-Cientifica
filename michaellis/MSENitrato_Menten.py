@@ -1,8 +1,7 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
-csv = pd.read_csv('Nitrato_Micha.csv', sep=",")
+csv = pd.read_csv('./data/Michaellis_Nitrato.csv', sep=",")
 
 x = csv['Cout']
 y = csv['Cout/(Ci-Cout)']

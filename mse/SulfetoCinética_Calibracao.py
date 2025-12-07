@@ -1,16 +1,14 @@
-import pandas as pd
-import numpy as np
-from numpy import linalg 
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import scipy as scipy
-import scipy.optimize
 
-csv_0 = pd.read_csv('Sulfetodados0_td.csv', sep=",")
-csv_1 = pd.read_csv('Sulfetodados1_td.csv', sep=",")
-csv_2 = pd.read_csv('Sulfetodados2_td.csv', sep=",")
-csv_v0 = pd.read_csv('Sulfeto0valtd.csv', sep=",")
-csv_v1 = pd.read_csv('Sulfeto1valtd.csv', sep=",")
-csv_v2 = pd.read_csv('Sulfeto2valtd.csv', sep=",")
+csv_0 = pd.read_csv('./data/validacao/Sulfetodados0_td.csv', sep=",")
+csv_1 = pd.read_csv('./data/validacao/Sulfetodados1_td.csv', sep=",")
+csv_2 = pd.read_csv('./data/validacao/Sulfetodados2_td.csv', sep=",")
+csv_v0 = pd.read_csv('./data/validacao/Sulfeto0valtd.csv', sep=",")
+csv_v1 = pd.read_csv('./data/validacao/Sulfeto1valtd.csv', sep=",")
+csv_v2 = pd.read_csv('./data/validacao/Sulfeto2valtd.csv', sep=",")
 
 def calculateMSE(ordem, x, y, quantidade):
     z = np.polyfit(x, y, 1)
@@ -29,7 +27,7 @@ def calculateMSE(ordem, x, y, quantidade):
     MSE = dp/quantidade
     print("MSE para ordem " + ordem + ":", MSE)
 
-#Ordem 0 
+#Ordem 0
 
 x = csv_0['Tempo de Residência']
 y = csv_0['Concentração']
@@ -60,19 +58,19 @@ plt.title('Função Ordem 0')
 
 # Pontos validação
 x_v = csv_v0['Tempo de Residência']
-y_v = -0.4677 * x_v + 49.66 
+y_v = -0.4677 * x_v + 49.66
 y_cv = csv_v0['Concentração']
 
-#print(y_v)
+print(y_v)
 
 plt.plot(x_v, y_v, marker='x', linestyle='none', color='red', label='Simulado', markersize=7, mew=3)
 
 plt.title('Validação Sulfeto Ordem 0')
 plt.xlabel('Tempo de Residência')
 plt.ylabel('Concentração')
-plt.legend() 
+plt.legend()
 
-#plt.show()
+plt.show()
 
 #Cálculo R quadrado
 slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x_v, y_v)
@@ -111,7 +109,7 @@ plt.title('Função Ordem 1')
 #plt.show()
 
 x_v = csv_v1['Tempo de Residência']
-y_v = -0.01398 * x_v + 3.939 
+y_v = -0.01398 * x_v + 3.939
 y_cv = csv_v1['ln[C]']
 
 print(y_v)
@@ -121,9 +119,9 @@ plt.plot(x_v, y_v, marker='x', linestyle='none', color='red', label='Simulado', 
 plt.title('Validação Sulfeto Ordem 1')
 plt.xlabel('Tempo de Residência')
 plt.ylabel('ln[C]')
-plt.legend() 
+plt.legend()
 
-#plt.show()
+plt.show()
 
 slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x_v, y_v)
 
@@ -152,7 +150,7 @@ calculateMSE('2', x, y, len(y))
 
 plt.figure(figsize=(7, 7))
 plt.scatter(x, y)
-#plt.text(0,0.050,f"{p} R² = {r_value:.4f}", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
+#plt.text(0,0.34,f"{p} R² = {r_value:.4f}", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
 
 plt.plot(x,p(x),"r--")
 plt.xlabel('Tempo de Residência')
@@ -161,7 +159,7 @@ plt.title('Função Ordem 2')
 #plt.show()
 
 x_v = csv_v2['Tempo de Residência']
-y_v = 0.0004514 * x_v + 0.01775
+y_v = 0.001122 * x_v + 0.2538
 y_cv = csv_v2['1/Ct']
 
 print(y_v)
@@ -171,7 +169,7 @@ plt.plot(x_v, y_v, marker='x', linestyle='none', color='red', label='Simulado', 
 plt.title('Validação Sulfeto Ordem 2')
 plt.xlabel('Tempo de Residência')
 plt.ylabel('1/Ct')
-plt.legend() 
+plt.legend()
 
 plt.show()
 

@@ -1,21 +1,21 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import scipy as scipy
 
-csv = pd.read_csv('Sulfato_Micha.csv', sep=",")
+csv = pd.read_csv('./data/Michaellis_Sulfeto.csv', sep=",")
 
 x = csv['Cout']
 y = csv['Cout/(Ci-Cout)']
 
 plt.figure(figsize=(5, 5))
 plt.scatter(x, y)
-plt.text(122,-6,"0.8307x - 119.7 R² = 0.9392", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
+plt.text(20.3,3.5,"0.01622 x - 2.865 R² = 0.9673", size='medium', bbox={'facecolor': 'none', 'edgecolor': 'k', 'boxstyle': 'round, pad=1'})
 
 z = np.polyfit(x, y, 1)
 p = np.poly1d(z)
 
-print("Função Michaellis Sulfato: ")
+print("Função Michaellis Sulfeto: ")
 print(p)
 
 #Cálculo R quadrado
@@ -28,12 +28,12 @@ print (r_value)
 plt.plot(x,p(x),"r--")
 plt.xlabel('Cout')
 plt.ylabel('Cout/(Ci-Cout)')
-plt.title('Menten Sulfato')
+plt.title('Menten Sulfeto de Hidrogênio')
 plt.show()
 
-km = 1/0.8307
+km = 1/0.01612
 
-ks = 119.7*km
+ks = 2.865*km
 
 print("Km (taxa máxima de reação): ")
 print(km)

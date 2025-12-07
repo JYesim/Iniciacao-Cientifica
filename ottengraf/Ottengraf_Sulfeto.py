@@ -1,6 +1,6 @@
-import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import scipy as scipy
 
 # === Constantes ===
@@ -8,26 +8,25 @@ Cin = 0.069
 As = 0.125
 K0 = 0.4677
 diff = 9.2 * (10**-9)
-m = 1 * (10**-3)  
+m = 1 * (10**-3)
 fXv = 0.25
 
 b = As * np.sqrt((K0 * fXv * diff) / 2 * m)
-df = pd.read_csv("Sulfetodados0_td.csv")
-
-df.columns = ['Tempo de Residência', 'Concentração']
+df = pd.read_csv("./sulfeto_dados.csv", sep=",")
+df.columns = ['Tempo de Residencia', 'Concentração']
 
 # === Cout ===
 def calculate_cout(ebrt):
     term = 1 - b * (ebrt / np.sqrt(Cin))
     return Cin * (term**2)
 
-df['Cout'] = df.apply(lambda row: calculate_cout(row['Tempo de Residência']), axis=1)
+df['Cout'] = df.apply(lambda row: calculate_cout(row['Tempo de Residencia']), axis=1)
 
 print("# === Cout ===")
 print(df)
 
 # ===  Ordem 0 ===
-x = df['Tempo de Residência']
+x = df['Tempo de Residencia']
 # y = df['Concentração']
 y = df['Cout']
 

@@ -1,12 +1,31 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import scipy as scipy
 
-csv = pd.read_csv('Sulfeto_Micha.csv', sep=",")
+csv = pd.read_csv('./data/Michaellis_Sulfeto_Conferencia.csv', sep=",")
 
-x = csv['Cout']
-y = csv['Cout/(Ci-Cout)']
+x = csv['c_out']
+y = csv['c_out/(c_in_c_out)']
+
+def calculateTudo(x, y, quantidade):
+    z = np.polyfit(x, y, 1)
+    p = np.poly1d(z)
+
+    y_previsto = p(x)
+
+    print("Lista do y previsto", y_previsto)
+
+    j = [(a - b)**2 for a, b in zip(y, y_previsto)]
+    print("Diferença entre as somas: ", j)
+
+    dp = sum(j)
+    print("Soma das diferenças", dp)
+
+    MSE = dp/quantidade
+    print("MSE para Menten do Sulfeto de Hidrogênio", MSE)
+
+calculateTudo(x, y, len(y))
 
 plt.figure(figsize=(5, 5))
 plt.scatter(x, y)

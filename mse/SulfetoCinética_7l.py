@@ -1,17 +1,15 @@
-import pandas as pd
-import numpy as np
-from numpy import linalg 
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import scipy as scipy
-import scipy.optimize
 
-csv_0 = pd.read_csv('Sulfetodados0_7l.csv', sep=",")
-csv_1 = pd.read_csv('Sulfetodados1_7l.csv', sep=",")
-csv_2 = pd.read_csv('Sulfetodados2_7l.csv', sep=",")
-csv_v = pd.read_csv('Sulfeto0val.csv', sep=",")
+csv_0 = pd.read_csv('./data/MSESulfeto_7l_0.csv', sep=",")
+csv_1 = pd.read_csv('./data/MSESulfeto_7l_1.csv', sep=",")
+csv_2 = pd.read_csv('./data/MSESulfeto_7l_2.csv', sep=",")
 
-#Ordem 0 
+csv_v = pd.read_csv('./data/validacao/Sulfeto0val.csv', sep=",")
 
+#Ordem 0
 x = csv_0['Tempo de Residência']
 y = csv_0['Concentração']
 
@@ -48,7 +46,7 @@ plt.plot(x_v, y_v, color='black', linestyle='dashed', linewidth=2)
 plt.title('Validação Sulfeto Ordem 0')
 plt.xlabel('Tempo de Residência')
 plt.ylabel('Concentração')
-plt.legend() 
+plt.legend()
 
 # Mostra o gráfico
 plt.show()
@@ -130,4 +128,3 @@ print (r_value)
 # slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x_v, y_v)
 
 # print(r_value)
-

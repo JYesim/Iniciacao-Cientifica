@@ -1,16 +1,15 @@
-import pandas as pd
-import numpy as np
-from numpy import linalg 
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import scipy as scipy
 import scipy.optimize
 
-csv_0 = pd.read_csv('Sulfatodados0_td.csv', sep=",")
-csv_1 = pd.read_csv('Sulfatodados1_td.csv', sep=",")
-csv_2 = pd.read_csv('Sulfatodados2_td.csv', sep=",")
-csv_v0 = pd.read_csv('Sulfato0valtd.csv', sep=",")
-csv_v1 = pd.read_csv('Sulfato1valtd.csv', sep=",")
-csv_v2 = pd.read_csv('Sulfato2valtd.csv', sep=",")
+csv_0 = pd.read_csv('./data/validacao/Sulfatodados0_td.csv', sep=",")
+csv_1 = pd.read_csv('./data/validacao/Sulfatodados1_td.csv', sep=",")
+csv_2 = pd.read_csv('./data/validacao/Sulfatodados2_td.csv', sep=",")
+csv_v0 = pd.read_csv('./data/validacao/Sulfato0valtd.csv', sep=",")
+csv_v1 = pd.read_csv('./data/validacao/Sulfato1valtd.csv', sep=",")
+csv_v2 = pd.read_csv('./data/validacao/Sulfato2valtd.csv', sep=",")
 
 def calculateMSE(ordem, x, y, quantidade):
     z = np.polyfit(x, y, 1)
@@ -29,7 +28,7 @@ def calculateMSE(ordem, x, y, quantidade):
     MSE = dp/quantidade
     print("MSE para ordem " + ordem + ":", MSE)
 
-#Ordem 0 
+#Ordem 0
 
 x = csv_0['Tempo de Residência']
 y = csv_0['Concentração']
@@ -70,7 +69,7 @@ plt.plot(x_v, y_v, marker='x', linestyle='none', color='red', label='Simulado', 
 plt.title('Validação Sulfato Ordem 0')
 plt.xlabel('Tempo de Residência')
 plt.ylabel('Concentração')
-plt.legend() 
+plt.legend()
 
 #plt.show()
 
@@ -111,7 +110,7 @@ plt.title('Função Ordem 1')
 plt.show()
 
 x_v = csv_v1['Tempo de Residência']
-y_v = 1.557 * 10**-5 * x_v + 4.747 
+y_v = 1.557 * 10**-5 * x_v + 4.747
 y_cv = csv_v1['ln[C]']
 
 print(y_v)
@@ -121,7 +120,7 @@ plt.plot(x_v, y_v, marker='x', linestyle='none', color='red', label='Simulado', 
 plt.title('Validação Sulfato Ordem 1')
 plt.xlabel('Tempo de Residência')
 plt.ylabel('ln[C]')
-plt.legend() 
+plt.legend()
 
 #plt.show()
 
@@ -171,7 +170,7 @@ plt.plot(x_v, y_v, marker='x', linestyle='none', color='red', label='Simulado', 
 plt.title('Validação Sulfato Ordem 2')
 plt.xlabel('Tempo de Residência')
 plt.ylabel('1/Ct')
-plt.legend() 
+plt.legend()
 
 plt.show()
 
